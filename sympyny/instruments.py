@@ -1,18 +1,11 @@
 from pathlib import Path
 
-from playsound import playsound
-
-
-PATHS = {
-    "root": Path(__file__).parent.parent,
-    "sounds": Path(__file__).parent.parent / "sounds",
-    "brass": Path(__file__).parent.parent / "sounds" / "brass"
-}
+from audio_io import play_sound
 
 
 class Instrument:
     def __init__(self, path: Path):
         self._path = path
 
-    def play(self):
-        playsound(self._path)
+    def play(self, thread=False) -> None:
+        play_sound(self._path, thread)
