@@ -1,6 +1,7 @@
-from instruments import PATHS, Instrument
+from pathlib import Path
 
-file = PATHS["brass"] / "trumpet.wav"
-trumpet = Instrument(file)
-
-trumpet.play()
+PATHS = {
+    "root": Path(__file__).parent.parent,
+    "sounds": Path(__file__).parent.parent / "sounds",
+    "brass": Path(__file__).parent.parent / "sounds" / "brass",
+}
