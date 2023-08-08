@@ -1,29 +1,48 @@
 """What the end result should be able to do (subject to change)."""
 
 from sympyny import Song
-from sympyny.instruments import trumpet
+from instruments import Instrument
+from defaults import trumpet
 
+
+# Instrument definition
+my_instrument = Instrument("My Instrument", "/path/to/sound/file")
 
 # Song definition
 
-# Define song with name and other necessary stuff
-ode_to_joy = Song("Ode to Joy", bpm=120, octive=5, composer="Anonymous4045")
+# Define song with name and other attributes
+ode_to_joy = Song(
+    "Ode to Joy",
+    bpm=120,
+    octave=5,
+    composer="Anonymous4045",
+    layers={
+        "Melody": (
+            # F4 for 1 beat
+            trumpet.f(4, 1),
+            # Rest for 1 beat
+            trumpet.rest(1),
+        )
+    },
+)
 
-# Add a musical layer comprised of one instrument. Can be as many layers as needed.
-ode_to_joy.add_layer("Melody", trumpet, (("C5", 1 / 2), ("F5", 1 / 4), ("Rest", 1)))
+# Add a layer to the song
+harmony = ode_to_joy.add_layer("Harmony")
 
+# Add notes with loops
+for octave in range(3, 6):
+    for note in ("C", "E", "G"):
+        harmony.add_note(my_instrument.note(note, octave, 1))
 
 # Processing
 
-# Runs through all the processing to add the sounds defined in the layers above into the given format
+# Turns the song into a sound file
 ode_to_joy.save("ode_to_joy", "wav")
-
 
 # Usage
 
 # Plays the sound file saved above with the given parameters
 ode_to_joy.play(volume=0.5, speed=1)
-
 
 # Fun stuff I might add
 
